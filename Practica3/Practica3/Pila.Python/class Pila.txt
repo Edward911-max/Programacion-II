@@ -1,8 +1,8 @@
 class Pila:
     def __init__(self, n):
-        self._arreglo = [0] * n  # Inicializamos el arreglo con ceros
-        self._top = -1  # El tope inicia vacío
-        self._n = n  # Capacidad máxima de la pila
+        self._arreglo = [0] * n  
+        self._top = -1  
+        self._n = n 
 
     def push(self, e):
         if not self.isFull():
