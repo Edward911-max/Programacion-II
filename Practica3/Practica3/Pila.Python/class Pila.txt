@@ -1,0 +1,46 @@
+class Pila:
+    def __init__(self, n):
+        self._arreglo = [0] * n  # Inicializamos el arreglo con ceros
+        self._top = -1  # El tope inicia vacío
+        self._n = n  # Capacidad máxima de la pila
+
+    def push(self, e):
+        if not self.isFull():
+            self._top += 1
+            self._arreglo[self._top] = e
+        else:
+            print("Pila llena, no se puede agregar el elemento")
+
+    def pop(self):
+        if not self.isEmpty():
+            elemento = self._arreglo[self._top]
+            self._top -= 1
+            return elemento
+        else:
+            print("Pila vacía, no se puede extraer el elemento")
+            return None
+
+    def peek(self):
+        if not self.isEmpty():
+            return self._arreglo[self._top]
+        else:
+            print("Pila vacía")
+            return None
+
+    def isEmpty(self):
+        return self._top == -1
+
+    def isFull(self):
+        return self._top == self._n - 1
+
+    def __str__(self):
+        return str(self._arreglo[:self._top + 1])
+
+pila = Pila(5)
+pila.push(10)
+pila.push(20)
+pila.push(30)
+print("Elemento en el tope:", pila.peek())
+print("Pila completa:", pila)
+pila.pop()
+print("Después de hacer pop:", pila)
