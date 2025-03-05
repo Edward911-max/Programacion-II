@@ -62,7 +62,6 @@ class Pila {
         return resultado;
     }
 
-    // Aquí está el método MAIN dentro de la clase Pila
     public static void main(String[] args) {
         Pila pila = new Pila(5);
         pila.push(10);
