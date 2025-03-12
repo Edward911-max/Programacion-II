@@ -1,0 +1,28 @@
+import math
+
+class Area:
+    @staticmethod
+    def calcular(radio: float):
+        """Área de un círculo"""
+        return math.pi * radio**2
+
+    @staticmethod
+    def calcular(base: float, altura: float):
+        """Área de un rectángulo o triángulo rectángulo"""
+        return base * altura
+
+    @staticmethod
+    def calcular(base1: float, base2: float, altura: float):
+        """Área de un trapecio"""
+        return ((base1 + base2) * altura) / 2
+
+    @staticmethod
+    def calcular(lado: float, apotema: float, num_lados=5):
+        """Área de un pentágono"""
+        return (num_lados * lado * apotema) / 2
+
+print("Área del círculo:", Area.calcular(5))
+print("Área del rectángulo:", Area.calcular(10, 4))
+print("Área del triángulo rectángulo:", Area.calcular(6, 3) / 2)
+print("Área del trapecio:", Area.calcular(8, 6, 4))
+print("Área del pentágono:", Area.calcular(5, 3.5))
