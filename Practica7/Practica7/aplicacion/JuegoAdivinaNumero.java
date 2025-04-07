@@ -6,10 +6,9 @@ import java.util.Random;
 public class JuegoAdivinaNumero extends Juego {
     public int numeroAAdivinar;
 
-    public JuegoAdivinaNumero(int vidas, int numeroFijado) {
+    public JuegoAdivinaNumero(int vidas) {
         this.numeroDeVidas = vidas;
         this.record = 0;
-        this.numeroAAdivinar = numeroFijado;
     }
 
     public void juega() {
