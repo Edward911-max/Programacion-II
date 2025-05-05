@@ -1,0 +1,108 @@
+class Ministerio:
+    def __init__(self, nombre, direccion):
+        self.nombre = nombre
+        self.direccion = direccion
+        self.nroEmpleados = 0
+        self.empleados = []
+        self.edades = []
+        self.sueldos = []
+
+    def agregar_empleado(self, nombre, edad, sueldo):
+        self.empleados.append(nombre)
+        self.edades.append(edad)
+        self.sueldos.append(sueldo)
+        self.nroEmpleados += 1
+
+    def eliminar_por_edad(self, edad_x):
+        indices = [i for i, edad in enumerate(self.edades) if edad == edad_x]
+        for i in sorted(indices, reverse=True):
+            self.empleados.pop(i)
+            self.edades.pop(i)
+            self.sueldos.pop(i)
+            self.nroEmpleados -= 1
+
+    #c) Sobrecarga del operador + para transferir empleado X al otro ministerio
+    def __add__(self, other):
+        nombre = "Lucy Sosa Rios"
+        if nombre in self.empleados:
+            idx = self.empleados.index(nombre)
+            other.agregar_empleado(self.empleados[idx], self.edades[idx], self.sueldos[idx])
+            self.empleados.pop(idx)
+            self.edades.pop(idx)
+            self.sueldos.pop(idx)
+            self.nroEmpleados -= 1
+            print(f"Empleado '{nombre}' transferido de la línea {self.nombre} a la línea {other.nombre}.")
+        else:
+            print(f"Empleado '{nombre}' no se encontró en la línea {self.nombre}.")
+        return other
+
+    def mostrar_todos(self):
+        print(f"Empleados de la línea {self.nombre}:")
+        for i in range(self.nroEmpleados):
+            print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+        print()
+
+    def mostrar_menor_edad(self):
+        if not self.edades:
+            return
+        menor_edad = min(self.edades)
+        print(f"Empleados de la línea {self.nombre} con la menor edad:")
+        for i in range(self.nroEmpleados):
+            if self.edades[i] == menor_edad:
+                print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+        print()
+
+    def mostrar_menor_sueldo(self):
+        if not self.sueldos:
+            return
+        menor_sueldo = min(self.sueldos)
+        print(f"Empleados de la línea {self.nombre} con el menor sueldo:")
+        for i in range(self.nroEmpleados):
+            if self.sueldos[i] == menor_sueldo:
+                print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+        print()
+
+
+#a) Instanciar 2 objetos Ministerio de diferente forma
+linea_rojo = Ministerio("Rojo", "Estación Central")
+linea_azul = Ministerio("Azul", "Estación 16 de Julio")
+
+#Agregar empleados al ministerio Rojo
+linea_rojo.agregar_empleado("Pedro Rojas Luna", 35, 2500)
+linea_rojo.agregar_empleado("Lucy Sosa Rios", 43, 3250)
+linea_rojo.agregar_empleado("Ana Perez Rojas", 26, 2700)
+linea_rojo.agregar_empleado("Saul Arce Calle", 29, 2500)
+
+# Agregar empleados al ministerio Azul
+linea_azul.agregar_empleado("Luis Gómez", 30, 2200)
+
+# Mostrar estado inicial
+print("--- ANTES DE TRANSFERIR ---")
+linea_rojo.mostrar_todos()
+linea_azul.mostrar_todos()
+
+#c) Transferir 'Lucy Sosa Rios' de Rojo a Azul
+linea_rojo + linea_azul
+
+print("--- DESPUÉS DE TRANSFERIR 'Lucy Sosa Rios' A LÍNEA 2 ---")
+linea_rojo.mostrar_todos()
+linea_azul.mostrar_todos()
+
+#b) Eliminar empleados con edad X (ejemplo: eliminar edad 29 en Rojo)
+linea_rojo.eliminar_por_edad(29)
+print("--- DESPUÉS DE ELIMINAR EMPLEADOS DE 29 AÑOS EN LÍNEA ROJO ---")
+linea_rojo.mostrar_todos()
+
+#d1) Mostrar empleados con la menor edad
+print("--- EMPLEADOS CON LA MENOR EDAD EN LÍNEA ROJO ---")
+linea_rojo.mostrar_menor_edad()
+
+print("--- EMPLEADOS CON LA MENOR EDAD EN LÍNEA AZUL ---")
+linea_azul.mostrar_menor_edad()
+
+#d2) Mostrar empleados con el menor sueldo
+print("--- EMPLEADOS CON EL MENOR SUELDO EN LÍNEA ROJO ---")
+linea_rojo.mostrar_menor_sueldo()
+
+print("--- EMPLEADOS CON EL MENOR SUELDO EN LÍNEA AZUL ---")
+linea_azul.mostrar_menor_sueldo()

@@ -1,0 +1,98 @@
+class LineaTeleferico:
+    def __init__(self, color, tramo, nroCabinas):
+        self.color = color
+        self.tramo = tramo
+        self.nroCabinas = nroCabinas
+        self.nroEmpleados = 0
+        self.empleados = []
+        self.edades = []
+        self.sueldos = []
+
+    def agregar_empleado(self, nombre, edad, sueldo):
+        self.empleados.append(nombre)
+        self.edades.append(edad)
+        self.sueldos.append(sueldo)
+        self.nroEmpleados += 1
+
+    def mostrar_empleados(self):
+        print(f"Empleados de la línea {self.color}:")
+        for i in range(self.nroEmpleados):
+            print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+
+    def eliminar_apellido(self, apellido):
+        i = 0
+        while i < len(self.empleados):
+            if apellido in self.empleados[i]:
+                del self.empleados[i]
+                del self.edades[i]
+                del self.sueldos[i]
+                self.nroEmpleados -= 1
+            else:
+                i += 1
+
+    def __add__(self, otro):
+        nombre = "Lucy Sosa Rios" 
+        if nombre in self.empleados:
+            idx = self.empleados.index(nombre)
+            otro.agregar_empleado(self.empleados[idx], self.edades[idx], self.sueldos[idx])
+            self.empleados.pop(idx)
+            self.edades.pop(idx)
+            self.sueldos.pop(idx)
+            self.nroEmpleados -= 1
+            print(f"Empleado '{nombre}' transferido de la línea {self.color} a la línea {otro.color}.")
+        else:
+            print(f"Empleado '{nombre}' no se encontró en la línea {self.color}.")
+        return otro
+
+    def mostrar_datos(self, tipo_filtro=None, valor=None):
+        print(f"color = \"{self.color}\"")
+        print(f"tramo = \"{self.tramo}\"")
+        print(f"nroCabinas = {self.nroCabinas}")
+        print(f"nroEmpleados = {self.nroEmpleados}")
+        print(f"Empleados de la línea {self.color}:")
+        for i in range(self.nroEmpleados):
+            if tipo_filtro == "edad" and self.edades[i] >= valor:
+                print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+            elif tipo_filtro == "sueldo" and self.sueldos[i] >= valor:
+                print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+            elif tipo_filtro is None:
+                print(f"{self.empleados[i]} - Edad: {self.edades[i]} - Sueldo: {self.sueldos[i]}")
+        print()
+
+
+# (a) Instanciar objetos
+linea1 = LineaTeleferico("Rojo", "Estación Central, Cementerio, 16 de Julio", 20)
+linea2 = LineaTeleferico("Azul", "Parque Mirador, Estación Busch, Del Poeta", 25)
+
+# Agregar empleados a linea1
+linea1.agregar_empleado("Pedro Rojas Luna", 35, 2500)
+linea1.agregar_empleado("Lucy Sosa Rios", 43, 3250)
+linea1.agregar_empleado("Ana Perez Rojas", 26, 2700)
+linea1.agregar_empleado("Saul Arce Calle", 29, 2500)
+
+# Agregar empleados a linea2
+linea2.agregar_empleado("Luis Gómez", 30, 2200)
+
+# Mostrar empleados
+print("\n--- ANTES DE TRANSFERENCIA Y ELIMINACIÓN ---")
+linea1.mostrar_datos()
+linea2.mostrar_datos()
+
+# (b) Eliminar a los empleados con apellido X
+linea1.eliminar_apellido("Calle")
+
+print("\n--- DESPUÉS DE ELIMINAR APELLIDO 'Calle' EN LÍNEA 1 ---")
+linea1.mostrar_datos()
+
+# (c) Sobrecargar operador +
+linea2 = linea1 + linea2
+
+print("\n--- DESPUÉS DE TRANSFERIR 'Lucy Sosa' A LÍNEA 2 ---")
+linea1.mostrar_datos()
+linea2.mostrar_datos()
+
+print("--- EMPLEADOS CON SUELDO >= 2500 EN LÍNEA 2 ---")
+linea2.mostrar_datos(tipo_filtro="sueldo", valor=2500)
+
+print("--- EMPLEADOS MAYORES DE 30 AÑOS EN LÍNEA 1 ---")
+linea1.mostrar_datos(tipo_filtro="edad", valor=30)
